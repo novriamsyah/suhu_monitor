@@ -156,24 +156,18 @@
   </script>
 
   <script>
-    const humidityValue = 95; // Nilai kelembapan (ganti sesuai kebutuhan)
-    const circle = document.querySelector(".progress");
-    const labelElement = document.querySelector(".label");
+    function updateWaterLevel(humidityValue) {
+    const waterElement = document.querySelector(".water");
+    
+    // Validasi nilai agar berada di rentang 0-100
+    const value = Math.max(0, Math.min(100, humidityValue));
 
-    // Hitung nilai spidometer
-    const radius = 80; // Sesuai dengan `r` pada elemen lingkaran
-    const circumference = 2 * Math.PI * radius;
-    const offset = circumference * ((100 - humidityValue) / 100); // Nilai invers untuk stroke-dasharray
+    // Perbarui ketinggian air (semakin tinggi kelembapan, semakin penuh)
+    waterElement.style.top = `${100 - value}%`; // Mengatur posisi top
+}
 
-    // Set properti SVG
-    circle.setAttribute("r", radius);
-    circle.setAttribute("cx", 100);
-    circle.setAttribute("cy", 100);
-    circle.setAttribute("stroke-dasharray", circumference);
-    circle.setAttribute("stroke-dashoffset", offset);
-
-    // Perbarui label
-    labelElement.textContent = `${humidityValue.toFixed(2)}%`;
+    // Contoh pemanggilan fungsi updateWaterLevel
+    updateWaterLevel(70);
   </script>
 
   <!-- <script>

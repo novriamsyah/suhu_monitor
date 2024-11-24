@@ -13,14 +13,8 @@ return new class extends Migration
     {
         Schema::create('sensor_values', function (Blueprint $table) {
             $table->id();
-            $table->decimal('tegangan', 10, 2)->nullable();
-            $table->decimal('arus', 10, 2)->nullable();
-            $table->decimal('dy_aktif', 10, 2)->nullable();
-            $table->decimal('dy_reaktif', 10, 2)->nullable();
-            $table->decimal('dy_semu', 10, 2)->nullable();
-            $table->decimal('frekuensi', 5, 2)->nullable();
-            $table->decimal('energi', 10, 4)->nullable();
-            $table->string('biaya')->nullable();
+            $table->decimal('temperature', 10, 1)->nullable();
+            $table->decimal('humidity', 10, 1)->nullable();
             $table->timestamps();
         });
     }

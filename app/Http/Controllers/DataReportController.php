@@ -48,57 +48,57 @@ class DataReportController extends Controller
     //EXPORT DATA ALL SENSOR
     public function exportXlxsAllData(Request $request)
     {
-        $validate = $request->validate([
-            'from_date' => 'nullable|date',
-            'to_date' => 'nullable|date|after_or_equal:from_date',
-        ]);
+        // $validate = $request->validate([
+        //     'from_date' => 'nullable|date',
+        //     'to_date' => 'nullable|date|after_or_equal:from_date',
+        // ]);
 
-        $fromDateData = $request->input('from_date');
-        $toDateData = $request->input('to_date');
-        $filename = "data_sensor_" . uniqid() . ".xlsx";
+        // $fromDateData = $request->input('from_date');
+        // $toDateData = $request->input('to_date');
+        // $filename = "data_sensor_" . uniqid() . ".xlsx";
 
-        return Excel::download(new OutputDataSensorExport($fromDateData, $toDateData), $filename, \Maatwebsite\Excel\Excel::XLSX);
+        // return Excel::download(new OutputDataSensorExport($fromDateData, $toDateData), $filename, \Maatwebsite\Excel\Excel::XLSX);
     }
 
     public function exportCsvAllData(Request $request)
     {
-        $validate = $request->validate([
-            'from_date' => 'nullable|date',
-            'to_date' => 'nullable|date|after_or_equal:from_date',
-        ]);
+        // $validate = $request->validate([
+        //     'from_date' => 'nullable|date',
+        //     'to_date' => 'nullable|date|after_or_equal:from_date',
+        // ]);
 
-        $fromDateData = $request->input('from_date');
-        $toDateData = $request->input('to_date');
-        $filename = "data_sensor_" . uniqid() . ".csv";
+        // $fromDateData = $request->input('from_date');
+        // $toDateData = $request->input('to_date');
+        // $filename = "data_sensor_" . uniqid() . ".csv";
 
-        return Excel::download(new OutputDataSensorExport($fromDateData, $toDateData), $filename, \Maatwebsite\Excel\Excel::CSV);
+        // return Excel::download(new OutputDataSensorExport($fromDateData, $toDateData), $filename, \Maatwebsite\Excel\Excel::CSV);
     }
 
     public function exportPdfAllData(Request $request)
     {
-        $validate = $request->validate([
-            'from_date' => 'nullable|date',
-            'to_date' => 'nullable|date|after_or_equal:from_date',
-        ]);
+        // $validate = $request->validate([
+        //     'from_date' => 'nullable|date',
+        //     'to_date' => 'nullable|date|after_or_equal:from_date',
+        // ]);
 
-        $from = $request->from_date ? date('Y-m-d', strtotime($request->from_date)) : null;
-        $to = $request->to_date ? date('Y-m-d', strtotime($request->to_date)) : null;
+        // $from = $request->from_date ? date('Y-m-d', strtotime($request->from_date)) : null;
+        // $to = $request->to_date ? date('Y-m-d', strtotime($request->to_date)) : null;
 
-        $datas = SensorValue::query()
-            ->when($from && $to, function ($query) use ($from, $to) {
-                return $query->whereDate('created_at', '>=', $from)
-                    ->whereDate('created_at', '<=', $to);
-            })
-            ->get();
+        // $datas = SensorValue::query()
+        //     ->when($from && $to, function ($query) use ($from, $to) {
+        //         return $query->whereDate('created_at', '>=', $from)
+        //             ->whereDate('created_at', '<=', $to);
+        //     })
+        //     ->get();
 
-        $pdf = Pdf::loadView('report.pdf_all_sensor_data', [
-            'datas' => $datas,
-            'from_date' => $request->from_date ?? $datas->first()->created_at,
-            'to_date' => $request->to_date ?? $datas->last()->created_at,
+        // $pdf = Pdf::loadView('report.pdf_all_sensor_data', [
+        //     'datas' => $datas,
+        //     'from_date' => $request->from_date ?? $datas->first()->created_at,
+        //     'to_date' => $request->to_date ?? $datas->last()->created_at,
 
-        ]);
+        // ]);
 
-        return $pdf->stream();
+        // return $pdf->stream();
     }
 
 }

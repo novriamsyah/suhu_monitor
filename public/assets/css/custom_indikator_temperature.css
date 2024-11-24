@@ -1,0 +1,247 @@
+/* GLOBAL */
+@import url('https://fonts.googleapis.com/css?family=Jaldi&display=swap');
+
+p {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#info {
+  opacity: 0.2;
+  margin: 0;
+  text-align: center;
+}
+
+/* Thermometer Variables (CSS custom properties for reusability) */
+:root {
+  --main-tint: #3d3d44;
+  --background-color: #35353b;
+  --border-size: 9px;
+  --border-color: #2f2f34;
+  --width: 25px;
+  --height: 120px;
+  --bulb-size: 50px;
+  --radius: 20px;
+  --graduations-style: 2px solid rgba(0, 0, 0, 0.5);
+  --bulb-color: #3dcadf;
+  --mercury-color: linear-gradient(#f17a65, #3dcadf);
+  --tooltip-color: rgba(0, 0, 0, 0.7);
+  --tooltip-size: 1em;
+  --tooltip-radius: 5px;
+  --tooltip-top-shift: 5px;
+  --tooltip-vertical-padding: 5px;
+  --tooltip-horizontal-padding: 10px;
+  --tooltip-left-shift: 100%;
+}
+
+/* THERMOMETER */
+#termometer {
+  width: var(--width);
+  background: var(--background-color);
+  height: var(--height);
+  position: relative;
+  border: var(--border-size) solid var(--border-color);
+  border-radius: var(--radius);
+  z-index: 1;
+  margin-bottom: var(--bulb-size);
+}
+
+#termometer:before,
+#termometer:after {
+  position: absolute;
+  content: "";
+  border-radius: 50%;
+}
+
+/* Border cover */
+#termometer:before {
+  width: 100%;
+  height: calc(var(--bulb-size) / 2 + var(--border-size));
+  bottom: var(--border-size);
+  background: var(--background-color);
+  z-index: -1;
+}
+
+/* Bulb */
+#termometer:after {
+  transform: translateX(-50%);
+  width: var(--bulb-size);
+  height: var(--bulb-size);
+  background-color: var(--bulb-color);
+  bottom: calc(-1 * var(--bulb-size) + var(--border-size));
+  border: var(--border-size) solid var(--border-color);
+  z-index: -3;
+  left: 50%;
+}
+
+#graduations {
+  height: 59%;
+  top: 20%;
+  width: 50%;
+  position: absolute;
+  border-top: var(--graduations-style);
+  border-bottom: var(--graduations-style);
+}
+
+#graduations:before {
+  content: "";
+  position: absolute;
+  height: 34%;
+  width: 100%;
+  top: 32%;
+  border-top: var(--graduations-style);
+  border-bottom: var(--graduations-style);
+}
+
+#temperature {
+  bottom: 0;
+  background: var(--mercury-color);
+  width: 100%;
+  border-radius: var(--radius);
+  background-size: 100% var(--height);
+  transition: all 0.2s ease-in-out;
+  position: absolute;
+}
+
+/* Temperature Tooltip */
+/* #temperature:before {
+  content: attr(data-value);
+  background: var(--tooltip-color);
+  color: white;
+  z-index: 2;
+  padding: var(--tooltip-vertical-padding) var(--tooltip-horizontal-padding);
+  border-radius: var(--tooltip-radius);
+  font-size: var(--tooltip-size);
+  line-height: 1;
+  transform: translateY(50%);
+  left: calc(var(--tooltip-left-shift) + 1em / 1.5);
+  top: calc(-1em + var(--tooltip-top-shift) - var(--tooltip-vertical-padding) * 2);
+  position: absolute;
+} */
+
+#temperature:after {
+  content: "";
+  border-top: calc(var(--tooltip-size) / 2.2) solid transparent;
+  border-bottom: calc(var(--tooltip-size) / 2.2) solid transparent;
+  border-right: calc(var(--tooltip-size) / 1.5) solid var(--tooltip-color);
+  left: var(--tooltip-left-shift);
+  top: calc(-1em + var(--tooltip-top-shift));
+  position: absolute;
+}
+
+/* RANGE */
+input[type="range"] {
+  -webkit-appearance: none;
+  background: transparent;
+  margin: 5px 0;
+  width: 100%;
+}
+
+input[type="range"]:focus {
+  outline: 0;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  background: var(--border-color);
+  border-radius: 5px;
+  height: 10px;
+  transition: all 0.2s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  background: var(--bulb-color);
+  border-radius: 12px;
+  cursor: pointer;
+  height: 11px;
+  width: 18px;
+}
+
+input[type="range"]::-moz-range-thumb {
+  background: var(--bulb-color);
+  border-radius: 12px;
+  cursor: pointer;
+  height: 11px;
+  width: 18px;
+}
+
+
+@keyframes spin{
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+.fu-progress {
+  position: relative;
+  width: 170px;
+  height: 170px;
+  border: 5px solid rgb(23, 139, 202);
+  border-radius: 50% !important;
+
+  .fu-inner {
+    position: absolute;
+    overflow:hidden;
+
+    z-index: 2;
+
+    width: 160px;
+    height: 160px;
+    border: 5px solid #ffffff;
+    border-radius: 50% !important;
+
+    .water {
+      position: absolute;
+      z-index: 1;
+      background: rgba(23, 139, 202, 0.5);
+      width: 200%;
+      height: 200%;
+
+      transform: translateZ(0);
+      -webkit-transform: translateZ(0);
+
+      transition: all 1s ease !important;
+      -webkit-transition: all 1s ease !important;
+
+      top: 50%;
+      left: -50%;
+      border: 1px solid transparent;
+      border-radius: 40% !important;
+
+       animation-duration: 10s;
+       animation-name: spin;
+       animation-iteration-count: infinite;
+       animation-timing-function: linear;
+    }
+    
+    .glare {
+      position: absolute;
+      top: -120%;
+      left: -120%;
+      z-index: 5;
+      width:200%;
+      height: 200%;
+      transform: rotate(45deg);
+      background: #ffffff;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+    }
+
+    .fu-percent {
+      position: absolute;
+      top: 57px;
+      width: 100%;
+      height: 100%;
+
+      font-size: 2em;
+      font-weight: bold;
+      color: rgb(4, 86, 129);
+      text-align: center;
+    }
+  }
+}
